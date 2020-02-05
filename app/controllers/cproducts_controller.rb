@@ -16,7 +16,7 @@ class CproductsController < ApplicationController
     def new
         session[:pname]=params[:pname]
         session[:pid]=params[:pid]
-        unless Cproduct.find_by(pid:session[:pid],cust_id: session[:cid])
+        unless Cproduct.find_by(pid:session[:pid],cust_id: session[:cid],status: "Cart")
                 @cart=Cproduct.new
         else
              redirect_to edit_cproduct_path(session[:pid])
@@ -24,7 +24,7 @@ class CproductsController < ApplicationController
     end
 
     def create 
-         unless Cproduct.find_by(pid:session[:pid],cust_id: session[:cid])
+         unless Cproduct.find_by(pid:session[:pid],cust_id: session[:cid],status: "Cart")
             @cart=Cproduct.new(product_creds)
             @cart.cust_id=session[:cid]
             if @cart.save
@@ -38,16 +38,21 @@ class CproductsController < ApplicationController
      end
 
      def cart 
-        @cproduct=Cproduct.where(cust_id: session[:cid])
+        unless Cproduct.find_by(cust_id: session[:cid],status: "Cart").nil?
+            @cproduct=Cproduct.where(cust_id: session[:cid],status: "Cart")
+            @state=true
+        else
+            @state=false
+        end
      end
 
      def edit
         p params[:id]
-        @cproduct=Cproduct.find_by(pid: params[:id],cust_id: session[:cid])
+        @cproduct=Cproduct.find_by(pid: params[:id],cust_id: session[:cid],status: "Cart")
      end
 
      def update
-         @cproduct = Cproduct.find_by(pid: params[:id],cust_id: session[:cid])
+         @cproduct = Cproduct.find_by(pid: params[:id],cust_id: session[:cid],status: "Cart")
        
          if @cproduct.update(product_creds)
            redirect_to cart_path,notice: "Cart successfully updated"
@@ -57,10 +62,21 @@ class CproductsController < ApplicationController
      end
      
      def destroy
-         @cproduct = Cproduct.find_by(pid: params[:id],cust_id: session[:cid])
+         @cproduct = Cproduct.find_by(pid: params[:id],cust_id: session[:cid],status: "Cart")
          @cproduct.destroy
             redirect_to cart_url,notice: "Successfully Removed"
      end
+
+     def payment
+        @cproduct = Cproduct.where(cust_id: session[:cid])
+        @count=0
+        @cproduct.each do |a| 
+            @count+=1
+        end
+        @tot_price=params[:tot_price]
+        @tot_quantity=params[:tot_quantity]
+     end
+
      
      private
      def product_creds

@@ -1,0 +1,12 @@
+<div class="container-fluid">
+<h1>Payment Gateway</h1>
+
+<h3> Total no of Products : <%= @count%> </h3>
+<br/>
+<h3> Total Quantity : <%= @tot_quantity%> Kg </h3>
+<br/>
+<h3> Total Price : &#8377; <%= @tot_price%> </h3>
+<br/>
+<%= link_to "Place Order",orders_confirm_path(tot_price: @tot_price),class: "btn btn-primary"%>
+<%= link_to "cancel",:back,class: "btn btn-primary"%>
+</div>

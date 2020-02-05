@@ -1,0 +1,42 @@
+<h1><%= params[:status]%> Orders </h1>
+<br/>
+<br/>
+<div class="container-fluid ">
+    <br>
+    <%= link_to "Home" , custs_path , class:"btn btn-info"%>
+    <%= link_to 'Logout',mlogout_path ,class: "btn btn-danger",data:{confirm:"confirm to logout!!!"}%>
+    <style>
+    td,th {
+        text-align: center;
+        }
+    </style>
+    <%# p "@mproduct #{@mproduct.nil?}"%>
+    <table class="table align-middled">
+        <tr>
+            <th>Order Id</th>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Cancel</th>
+        </tr>
+        <% @products.each do |p| %>
+        <% product=Mproduct.find_by(pid: p.pid)%>
+            <tr>
+                <td><%= p.id %></td>
+                <td><%= p.pid %></td>
+                <td><%= p.pname %></td>
+                <td><%= p.quantity %></td>
+                <% price=p.quantity*product.price%>
+                <td><%= price %></td>
+                <th><%= p.status %></th>
+                <% if (p.status=="Placed")||(p.status=="Packed")||(p.status=="shipping")%>
+                <td><%= link_to "Cancel Order",orders_cancel_path(id: p.id),class: "btn btn-danger"%></td>
+                <%else%>
+                <td>-</td>
+                <% end%>
+            </tr>
+        <% end %>
+    </table>
+</div>

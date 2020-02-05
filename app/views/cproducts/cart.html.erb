@@ -2,7 +2,7 @@
     <br>
     <%= link_to "Home" , custs_path , class:"btn btn-info"%>
     <%= link_to 'Logout',mlogout_path ,class: "btn btn-danger",data:{confirm:"confirm to logout!!!"}%>
-
+    <% if @state%>
     <h2>Your Cart Products</h2>
 
     <style>
@@ -25,10 +25,11 @@
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-        <% tot_price=0%>
+        <% tot_price=0
+        tot_quantity=0%>
         <% @cproduct.each do |mp| %>
         <% product=Mproduct.find_by(pid: mp.pid)
-            p product
+            #p product
            mfr=Mfr.find_by(id: product.mfr_id)
            %>
             <tr>
@@ -41,11 +42,17 @@
                 <td><%= product.price %></td>
                 <% price=mp.quantity*product.price%>
                 <td><%= price %></td>
-                <% tot_price+=price%>
+                <% tot_quantity+=mp.quantity
+                 tot_price+=price%>
                 <td><%= link_to "Edit",edit_cproduct_path(product.pid),class: "btn btn-primary"%></td>
                 <td><%= link_to "Delete",cproduct_path(mp.pid),method: :delete,class: "btn btn-danger"%></td>
             </tr>
         <% end %>
     </table>
     <h3>Total Price is <%= tot_price%>
+    <br/>
+    <%= link_to "Order",payment_path(tot_price:tot_price,tot_quantity:tot_quantity),class: "btn btn-primary"%>
+    <% else %>
+        <h2>Your Cart Is Empty</h2>
+    <%end%>
 </div>

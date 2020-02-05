@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'goodsmarkets#index'
   get 'goodsmarkets/index'
   get 'goodsmarkets/customer'
@@ -12,6 +13,11 @@ Rails.application.routes.draw do
   post 'custs/search'=>'custs#search', as: 'search'
   get 'cproducts/ratings'=>'cproducts#ratings',as:'ratings'
   get 'cproducts/cart'=>'cproducts#cart',as:'cart'
+  get 'cproducts/payment'=>'cproducts#payment',as:'payment'
+  get 'cproducts/order'=>'cproducts#order',as:'order'
+  get 'orders/confirm'=>'orders#confirm'
+  get 'orders/cancel'=>'orders#cancel'
+  get 'orders/show'=>'orders#show'
   # get 'mhomes/logout'=>'mhomes#logout', as: 'mlogout'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :mfrs do

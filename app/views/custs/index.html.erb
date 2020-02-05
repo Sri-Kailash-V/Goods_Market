@@ -4,6 +4,8 @@
 <%= link_to "Home", custs_path ,class:"btn btn-info"%>
 <%= link_to "Profile", cprofile_path ,class:"btn btn-info"%>
 <%= link_to "cart",cart_path,class: "btn btn-info"%>
+<%= link_to "Placed",orders_show_path(status: "Placed"),class: "btn btn-info"%>
+<%= link_to "History",orders_show_path,class: "btn btn-info"%>
 <%= link_to "logout", clogout_path ,class:"btn btn-danger"%>
 </div>
 <br/>

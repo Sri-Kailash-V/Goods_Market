@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200204093014) do
+ActiveRecord::Schema.define(version: 20200205095829) do
 
   create_table "cproducts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer  "pid"
     t.string   "pname"
     t.integer  "quantity"
     t.integer  "cust_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "status",     default: "Cart"
     t.index ["cust_id"], name: "index_cproducts_on_cust_id", using: :btree
   end
 
