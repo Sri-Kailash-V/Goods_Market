@@ -1,0 +1,48 @@
+<% content_for(:htmltitle,"Add to cart")%>
+<h2>Add to cart</h2>
+
+<%= form_for @cproduct,url: cproduct_path(params[:id]),method: :patch do |f| %>
+<%@cproduct.errors.full_messages.each do |msg|%>
+ <div class="alert alert-danger "><%=msg%></div>
+<%end%>
+	<div class="form-group ">	
+		<div class="col-xs-1">
+			<%= f.label :product_Id %>
+		</div>
+		<div class="col-xs-2">
+			<%= params[:id]%>
+			<%= f.hidden_field :pid, :value=> params[:id]%></td>
+
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<div class="form-group">
+		<div class="col-xs-1">
+			<%= f.label :product_name %>
+		</div>
+		<div class="col-xs-2">
+        <% pname=Mproduct.find(params[:id]).product_name%>
+        <%= pname%>
+			<%= f.hidden_field :pname, :value=>pname%></td>
+		</div>
+	</div>
+    <br/>
+    <br/>
+    <div class="form-group ">	
+		<div class="col-xs-1">
+			<%= f.label :quantity %>
+		</div>
+		<div class="col-xs-2">
+			<%= f.number_field :quantity ,value: Cproduct.find_by(pid: params[:id],cust_id: session[:cid]).quantity,min: 20,step: 10 ,class:"form-control "%>
+		</div>
+	</div>
+	<br/>
+    <br/>
+	<div class="col-xs-2">
+		<%= f.submit 'Update Cart' ,class: "btn btn-primary "%>
+		<%= link_to "cancel" ,cart_path,class: "btn btn-primary"%>
+	</div>
+<%end%>
+<br/>
+<br/>

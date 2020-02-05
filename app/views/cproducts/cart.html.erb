@@ -27,7 +27,8 @@
         </tr>
         <% tot_price=0%>
         <% @cproduct.each do |mp| %>
-        <% product=Mproduct.find_by(pid: mp.id)
+        <% product=Mproduct.find_by(pid: mp.pid)
+            p product
            mfr=Mfr.find_by(id: product.mfr_id)
            %>
             <tr>
@@ -35,14 +36,14 @@
                 <td><%= product.group %></td>
                 <td><%= product.product_name %></td>
                 <td><%= mfr.id %></td> 
-                <td><%= mfr.username %></td> 
+                <td><%= mfr.username %>,id <%= mp.cust_id %></td> 
                 <td><%= mp.quantity %></td>
                 <td><%= product.price %></td>
                 <% price=mp.quantity*product.price%>
                 <td><%= price %></td>
                 <% tot_price+=price%>
-                <td><%= link_to "Edit",class: "btn btn-primary"%></td>
-                <td><%= link_to "Delete",cproduct_path(mp.id),method: :delete,class: "btn btn-danger"%></td>
+                <td><%= link_to "Edit",edit_cproduct_path(product.pid),class: "btn btn-primary"%></td>
+                <td><%= link_to "Delete",cproduct_path(mp.pid),method: :delete,class: "btn btn-danger"%></td>
             </tr>
         <% end %>
     </table>

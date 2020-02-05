@@ -1,5 +1,6 @@
 class Mproduct < ApplicationRecord
   belongs_to :mfr
+  # has_many :cproducts
   # mount_uploader :image, ImageUploader
   validates :product_name ,:presence=> true
   validates :quantity ,presence: true,numericality: {only_integer: true,greater_then_or_equal: 10}

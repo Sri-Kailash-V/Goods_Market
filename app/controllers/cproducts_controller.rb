@@ -16,16 +16,17 @@ class CproductsController < ApplicationController
     def new
         session[:pname]=params[:pname]
         session[:pid]=params[:pid]
-        unless Cproduct.find_by(pid:session[:pid])
+        unless Cproduct.find_by(pid:session[:pid],cust_id: session[:cid])
                 @cart=Cproduct.new
         else
              redirect_to edit_cproduct_path(session[:pid])
         end
     end
-    def create 
 
-         unless Cproduct.find_by(pid:session[:pid])
+    def create 
+         unless Cproduct.find_by(pid:session[:pid],cust_id: session[:cid])
             @cart=Cproduct.new(product_creds)
+            @cart.cust_id=session[:cid]
             if @cart.save
                 redirect_to custs_path,notice: "Added to cart"
             else 
@@ -35,11 +36,28 @@ class CproductsController < ApplicationController
              redirect_to edit_cproduct_path(session[:pid])
           end
      end
+
      def cart 
-        @cproduct=Cproduct.all
+        @cproduct=Cproduct.where(cust_id: session[:cid])
      end
+
+     def edit
+        p params[:id]
+        @cproduct=Cproduct.find_by(pid: params[:id],cust_id: session[:cid])
+     end
+
+     def update
+         @cproduct = Cproduct.find_by(pid: params[:id],cust_id: session[:cid])
+       
+         if @cproduct.update(product_creds)
+           redirect_to cart_path,notice: "Cart successfully updated"
+         else
+            render 'edit',notice: "Update Failed"
+         end
+     end
+     
      def destroy
-         @cproduct = Cproduct.find(params[:id])
+         @cproduct = Cproduct.find_by(pid: params[:id],cust_id: session[:cid])
          @cproduct.destroy
             redirect_to cart_url,notice: "Successfully Removed"
      end
@@ -50,7 +68,14 @@ class CproductsController < ApplicationController
      end
 end
 
-
+ # #   @cproduct.cust_id=session[:cid]
+        #  p"========================="
+        #   p @cproduct
+        #   p product_creds
+        #   p"========================="
+        #   @cproduct.quantity=params[:cproduct][:quantity]
+        #   @cproduct.save
+        #   p @cproduct.update_attributes(quantity: params[:cproduct][:quantity])
         # sql = "select product_name,pid,price from mproducts where quantity> 30"
         # raw = ActiveRecord::Base.connection.execute(sql)
         # raw.each do |row|

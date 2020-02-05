@@ -12,11 +12,14 @@
 
 ActiveRecord::Schema.define(version: 20200204093014) do
 
-  create_table "cproducts", primary_key: "pid", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "cproducts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer  "pid"
     t.string   "pname"
     t.integer  "quantity"
+    t.integer  "cust_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["cust_id"], name: "index_cproducts_on_cust_id", using: :btree
   end
 
   create_table "custs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -53,5 +56,6 @@ ActiveRecord::Schema.define(version: 20200204093014) do
     t.index ["mfr_id"], name: "index_mproducts_on_mfr_id", using: :btree
   end
 
+  add_foreign_key "cproducts", "custs", on_delete: :cascade
   add_foreign_key "mproducts", "mfrs", on_delete: :cascade
 end
