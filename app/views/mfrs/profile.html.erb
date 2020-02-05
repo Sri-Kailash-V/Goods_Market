@@ -1,0 +1,24 @@
+<h2>Profile</h2>
+
+<table class="table">
+    <tbody>
+    <tr class="">
+      <th class="col-sm-1">Username</th>
+      <td class="col-sm-1"><%= @mfr.username %></td>
+    </tr>
+     <tr class="">
+      <th class="col-sm-1">Email id</th>
+      <td class="col-sm-1"><%= @mfr.email %></td>
+    </tr>
+     <tr class="">
+      <th class="col-sm-1">Mobile number</th>
+      <td class="col-sm-1"><%= @mfr.mobile_no %></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<%= link_to "Edit" ,edit_mfr_path(session[:mid]),class: "btn btn-primary"%>
+<%= link_to 'Home',mfrs_path ,class: "btn btn-primary"%>
+
+<%= link_to "Delete Account" ,mfr_path(session[:mid]),method: :delete,data:{confirm:"confirm to Delete Account \n once Deleted it cant be retrived!!!!!"},class: "btn btn-danger"%>

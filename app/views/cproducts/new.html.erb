@@ -1,0 +1,47 @@
+<% content_for(:htmltitle,"Add to cart")%>
+<h2>Add to cart</h2>
+
+<%= form_for @cart,url: cproducts_path(@cart) do |f| %>
+<%@cart.errors.full_messages.each do |msg|%>
+ <div class="alert alert-danger "><%=msg%></div>
+<%end%>
+	<div class="form-group ">	
+		<div class="col-xs-1">
+			<%= f.label :product_Id %>
+		</div>
+		<div class="col-xs-2">
+			<%= session[:pid]%>
+			<%= f.hidden_field :pid, :value=> session[:pid]%></td>
+
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<div class="form-group">
+		<div class="col-xs-1">
+			<%= f.label :product_name %>
+		</div>
+		<div class="col-xs-2">
+        <%= session[:pname]%>
+			<%= f.hidden_field :pname, :value=>session[:pname]%></td>
+		</div>
+	</div>
+    <br/>
+    <br/>
+    <div class="form-group ">	
+		<div class="col-xs-1">
+			<%= f.label :quantity %>
+		</div>
+		<div class="col-xs-2">
+			<%= f.number_field :quantity,value: 20,min:20,step: 10 ,class:"form-control "%>
+		</div>
+	</div>
+	<br/>
+    <br/>
+	<div class="col-xs-2">
+		<%= f.submit 'Save' ,class: "btn btn-primary "%>
+		<%= link_to "cancel" ,custs_path,class: "btn btn-primary"%>
+	</div>
+<%end%>
+<br/>
+<br/>

@@ -1,0 +1,32 @@
+<h2>Profile</h2>
+
+<table class="table">
+    <tbody>
+    <tr class="">
+      <th class="col-sm-1">User Id</th>
+      <td class="col-sm-1"><%= @cid %></td>
+    </tr>
+    <tr class="">
+      <th class="col-sm-1">Username</th>
+      <td class="col-sm-1"><%= @cust.username %></td>
+    </tr>
+     <tr class="">
+      <th class="col-sm-1">Email id</th>
+      <td class="col-sm-1"><%= @cust.email %></td>
+    </tr>
+     <tr class="">
+      <th class="col-sm-1">Mobile number</th>
+      <td class="col-sm-1"><%= @cust.mobile_no %></td>
+    </tr>
+    <tr class="">
+      <th class="col-sm-1">Address</th>
+      <td class="col-sm-1"><%= @cust.address %></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<%= link_to "Edit" ,edit_cust_path(@cid),class: "btn btn-primary"%>
+<%= link_to 'Home',custs_path ,class: "btn btn-primary"%>
+
+<%= link_to "Delete Account" ,cust_path(@cid),method: :delete,data:{confirm:"confirm to Delete Account \nonce Deleted it cant be retrived!!!!!"},class: "btn btn-danger"%>

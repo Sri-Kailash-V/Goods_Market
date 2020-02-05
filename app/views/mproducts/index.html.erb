@@ -1,0 +1,40 @@
+<div class="container-fluid ">
+    <br>
+    <%= link_to "Home" , mfrs_path , class:"btn btn-info"%>
+    <%= link_to 'Add Products',new_mfr_mproduct_path(@mid), class:"btn btn-info"%>
+    <%= link_to 'Logout',mlogout_path ,class: "btn btn-danger",data:{confirm:"confirm to logout!!!"}%>
+
+    <h2>Your Products</h2>
+
+    <style>
+    
+        td,th {
+        text-align: center;
+        }
+    </style>
+    <%# p "@mproduct #{@mproduct.nil?}"%>
+    <table class="table align-middled">
+        <tr>
+            <th>Product Id</th>
+            <th>Product Group</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Ratings</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <% @mproduct.each do |mp| %>
+            <tr>
+                <td><%= mp.pid %></td>
+                <td><%= mp.group %></td>
+                <td><%= mp.product_name %></td>
+                <td><%= mp.quantity %></td>
+                <td><%= mp.price %></td>
+                <td><%= mp.ratings %></td> <%# <%= image_tag mp.image_url %>
+                <td><%= link_to "Edit",edit_mfr_mproduct_path(@mid,mp.pid),class: "btn btn-primary"%></td>
+                <td><%= link_to "Delete",mfr_mproduct_path(@mid,mp.pid),method: :delete,class: "btn btn-danger"%></td>
+            </tr>
+        <% end %>
+    </table>
+</div>

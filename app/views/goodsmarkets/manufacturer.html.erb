@@ -1,0 +1,35 @@
+<h1> Welcome Manufacturer </h1>
+<% content_for(:htmltitle,"Manufacturer login")%>
+<br>
+<%= form_for @mfr,url: msignin_path  do |f| %>
+<% if flash[:alert]%>
+<div class="alert alert-danger "><%= flash[:alert] %></div>
+<% end%>
+	<div class="form-group ">	
+		<div class="col-xs-1">
+			<%= f.label :email %>
+		</div>
+		<div class="col-xs-2">
+			<%= f.text_field :email ,class:"form-control "%>
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<div class="form-group">
+		<div class="col-xs-1">
+		<%= f.label :password %>
+			</div>
+		<div class="col-xs-2">
+			<%= f.text_field :password ,class:"form-control mb-3"%></td>
+		</div>
+	</div>
+	<br/><br/>
+	<div class="col-xs-1">
+		<%= f.submit 'login' ,class: "btn btn-primary "%>    
+	</div>
+	<%= link_to 'cancel',root_path ,class: "btn btn-primary"%>
+<%end%>
+<br/>
+<p class="h4">New User .........
+<%= link_to 'Manufacturers Signup',new_mfr_path ,class: "btn btn-primary"%>
+</p>

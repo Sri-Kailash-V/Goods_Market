@@ -1,0 +1,45 @@
+<h1>welcome <%= @cust.username%></h1>
+<div class="container-fluid">
+<br/>
+<%= link_to "Home", custs_path ,class:"btn btn-info"%>
+<%= link_to "Profile", cprofile_path ,class:"btn btn-info"%>
+<%= link_to "cart",cart_path,class: "btn btn-info"%>
+<%= link_to "logout", clogout_path ,class:"btn btn-danger"%>
+</div>
+<br/>
+<br/>
+
+
+<%= form_for :mproducts, url: search_path,method: :index do |f| %>
+<div class="form-group row">	
+	<div class="col-xs-1">
+		<%= f.label :Product %>
+	</div>
+	<div class="col-xs-9">
+		<%= f.text_field :group ,class:"form-control",placeholder:"Search by Product Group"%>
+	</div>
+    <div class="col-xs-2">
+	<%= f.submit 'Search' ,class: "btn btn-primary "%>
+    </div>
+</div>
+<%end%>
+
+
+<h2> Product Available </h2>
+<% @search.each do |p|%>
+<div class="col-sm-3 ">
+    <div class="container-fluid bg-info ">
+        <h3 class="text-center"><%=p.product_name%></h3>
+        <br/>
+        <h5 class="text-left col-sm-5">Price : &#8377;<%=p.price%></h5>
+        <h5 class="text-right col-sm-7">Ratings : &#10031;<%=p.ratings%></h5>
+        <h5 class="text-left col-sm-8">Manufacturer : <%=p.mfr_id%> <%=Mfr.find(p.mfr_id).username%> </h5>
+        <%= link_to "View",cproducts_path(mid: p.mfr_id,pid: p.pid),class: "btn btn-primary col-sm-4"%>
+        <h5 class="text-left col-sm-7">Available : <%=p.quantity%></h5>
+        <%= link_to "Add to cart",new_cproduct_path(pid:p.pid,pname:p.product_name),class: "btn btn-primary col-sm-5"%>
+        
+    </div>
+</div>
+
+<% end%>
+

@@ -1,0 +1,60 @@
+<h2> Welcome New Customer </h2>
+
+<%= form_for :cust, url: custs_path do |f| %>
+<%@cust.errors.full_messages.each do |msg|%>
+ <div class="alert alert-danger "><%=msg%></div>
+<%end%>
+<div class="form-group ">	
+	<div class="col-xs-1">
+		<%= f.label :username %>
+	</div>
+	<div class="col-xs-2">
+		<%= f.text_field :username ,class:"form-control "%>
+	</div>
+</div>
+<br/>
+<br/>
+<div class="form-group">
+	<div class="col-xs-1">
+		<%= f.label :email %>
+	</div>
+	<div class="col-xs-2">
+		<%= f.text_field :email ,class:"form-control"%></td>
+	</div>
+</div>
+<br/>
+<div class="form-group ">	
+	<div class="col-xs-1">
+		<%= f.label :password %>
+	</div>
+	<div class="col-xs-2">
+		<%= f.password_field :password ,class:"form-control "%>
+	</div>
+</div>
+<br/>
+<div class="form-group">
+	<div class="col-xs-1">
+		<%= f.label :mobile_no %>
+	</div>
+	<div class="col-xs-2">
+		<%= f.text_field :mobile_no ,class:"form-control "%></td>
+	</div>
+</div>
+<br/>
+<div class="form-group ">	
+	<div class="col-xs-1">
+		<%= f.label :address %>
+	</div>
+	<div class="col-xs-2">
+		<%= f.text_area :address ,class:"form-control "%>
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="col-xs-2">
+	<%= f.submit 'Save' ,class: "btn btn-primary "%>
+	<%= link_to "cancel" ,goodsmarkets_customer_path,class: "btn btn-primary"%>
+</div>
+<%end%>

@@ -1,0 +1,50 @@
+<div class="container-fluid ">
+    <br>
+    <%= link_to "Home" , custs_path , class:"btn btn-info"%>
+    <%= link_to 'Logout',mlogout_path ,class: "btn btn-danger",data:{confirm:"confirm to logout!!!"}%>
+
+    <h2>Your Cart Products</h2>
+
+    <style>
+    
+        td,th {
+        text-align: center;
+        }
+    </style>
+    <%# p "@mproduct #{@mproduct.nil?}"%>
+    <table class="table align-middled">
+        <tr>
+            <th>Product Id</th>
+            <th>Product Group</th>
+            <th>Product Name</th>
+            <th>Manufacturer Id</th>
+            <th>Manufacturer Name</th>
+            <th>Quantity</th>
+            <th>MRP</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <% tot_price=0%>
+        <% @cproduct.each do |mp| %>
+        <% product=Mproduct.find_by(pid: mp.id)
+           mfr=Mfr.find_by(id: product.mfr_id)
+           %>
+            <tr>
+                <td><%= product.pid %></td>
+                <td><%= product.group %></td>
+                <td><%= product.product_name %></td>
+                <td><%= mfr.id %></td> 
+                <td><%= mfr.username %></td> 
+                <td><%= mp.quantity %></td>
+                <td><%= product.price %></td>
+                <% price=mp.quantity*product.price%>
+                <td><%= price %></td>
+                <% tot_price+=price%>
+                <td><%= link_to "Edit",class: "btn btn-primary"%></td>
+                <td><%= link_to "Delete",cproduct_path(mp.id),method: :delete,class: "btn btn-danger"%></td>
+            </tr>
+        <% end %>
+    </table>
+    <h3>Total Price is <%= tot_price%>
+</div>

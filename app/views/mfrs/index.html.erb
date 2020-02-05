@@ -1,0 +1,10 @@
+<h1> Welcome <%= @mfr.username%></h1>
+
+<div class="container-fluid ">
+<br>
+<%= link_to "Home" , mfrs_path , class:"btn btn-info"%>
+<%= link_to "Profile" , mprofile_path , class:"btn btn-info"%>
+<%= link_to 'Products',mfr_mproducts_path(@mid), class:"btn btn-info"%>
+<%= link_to 'Logout',mlogout_path ,class: "btn btn-danger",data:{confirm:"confirm to logout!!!"}%>
+</div>
+

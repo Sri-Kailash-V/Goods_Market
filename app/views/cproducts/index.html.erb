@@ -1,0 +1,64 @@
+<h2> Product  </h2>
+
+<table class="table ">
+    <tbody>
+    <tr class="">
+      <th class="col-sm-1">Product Id</th>
+      <td class="col-sm-1"><%= @product.pid %></td>
+    </tr>
+     <tr class="">
+      <th class="col-sm-1">Product Name</th>
+      <td class="col-sm-1"><%= @product.product_name %></td>
+    </tr>
+     <tr class="">
+      <th class="col-sm-1">Quantity</th>
+      <td class="col-sm-1"><%= @product.quantity %></td>
+    </tr>
+    <tr class="">
+      <th class="col-sm-1">Price</th>
+      <td class="col-sm-1"><%= @product.price %></td>
+    </tr>
+    <tr class="">
+      <th class="col-sm-1">Manufacturer</th>
+      <td class="col-sm-1"><%= Mfr.find(@product.mfr_id).username %></td>
+    </tr>
+    <tr class="">
+      <th class="col-sm-1">Ratings</th>
+      <td class="col-sm-1"><%= "%.3f" % [@product.ratings/@product.rcount.to_f] %></td>
+    </tr>
+    <tr>
+        <th class="text-right">Rate the Product</th>
+        <td class="col-sm-1">
+            <%= link_to "1" ,ratings_path(mid:params[:mid],pid:params[:pid],number: 1)%>
+            <%= link_to "2" ,ratings_path(mid:params[:mid],pid:params[:pid],number: 2)%>
+            <%= link_to "3" ,ratings_path(mid:params[:mid],pid:params[:pid],number: 3)%>
+            <%= link_to "4" ,ratings_path(mid:params[:mid],pid:params[:pid],number: 4)%>
+            <%= link_to "5" ,ratings_path(mid:params[:mid],pid:params[:pid],number: 5)%>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<%= link_to 'Home',custs_path,class: "btn btn-primary"%>
+<%= link_to 'Add to cart',new_cproduct_path(pid: @product.pid,pname:@product.product_name),class: "btn btn-primary"%>
+
+<h2> Product from same Manufactures</h2>
+<% @samemfr.each do |p|%>
+<div class="col-sm-3 ">
+    <div class="container-fluid bg-info ">
+        <h3 class="text-center"><%=p.product_name%></h3>
+        <br/>
+        <h5 class="text-left col-sm-5">Price : &#8377;<%=p.price%></h5>
+        <h5 class="text-right col-sm-7">Ratings : &#10031;<%=p.ratings%></h5>
+        <h5 class="text-left col-sm-7">Available : <%=p.quantity%></h5>
+        <%= link_to "View",cproducts_path(mid: p.mfr_id,pid: p.pid),class: "btn btn-primary col-sm-5"%> <h2 class="text-left col-sm-7"></h2>
+        <%= link_to "Add to cart",new_cproduct_path(pid: p.pid,pname:p.product_name),class: "btn btn-primary col-sm-5 center"%>
+        
+    </div>
+</div>
+
+<% end%>
+
+
+

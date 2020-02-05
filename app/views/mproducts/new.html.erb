@@ -1,0 +1,56 @@
+<h2>Add Products</h2>
+<% if flash[:success]%>
+	<div class="alert alert-success "><%= flash[:success] %></div>
+<%end%>
+
+<%= form_for @mproduct, url: mfr_mproducts_path(@mid) do |f| %>
+<%# html: { multipart: true }, %>
+	<%@mproduct.errors.full_messages.each do |msg|%>
+		<div class="alert alert-danger ">
+			<%=msg%>
+		</div>
+	<%end%>
+	<div class="form-group ">	
+		<div class="col-xs-2">
+			<%= f.label :product_name %>
+		</div>
+		<div class="col-xs-2">
+			<%= f.text_field :product_name ,class:"form-control "%>
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<div class="form-group">
+		<div class="col-xs-2">
+			<%= f.label :"quantity__(in_Kg)" %>
+		</div>
+		<div class="col-xs-2">
+			<%= f.text_field :quantity ,class:"form-control"%></td>
+		</div>
+	</div>
+	<br/>
+	<div class="form-group ">	
+		<div class="col-xs-2">
+			<%= f.label :"price__(per_kg)" %>
+		</div>
+		<div class="col-xs-2">
+			<%= f.text_field :price ,class:"form-control "%>
+		</div>
+	</div>
+	<br/>
+	<div class="form-group ">	
+		<div class="col-xs-2">
+			<%= f.label :"type" %>
+		</div>
+		<div class="col-xs-2">
+			<%= f.select :group ,Mproduct::Group ,class:"dropdown-menu"%>
+		</div>
+	</div>
+	<br/>
+	<br/>
+	
+	<div class="col-xs-2">
+		<%= f.submit 'Save' ,class: "btn btn-primary "%>
+		<%= link_to "cancel" ,mfr_mproducts_path(@mid) ,class: "btn btn-primary"%>
+	</div>
+<%end%>	
