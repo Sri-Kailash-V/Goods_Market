@@ -2,15 +2,21 @@ class MfrsController < ApplicationController
 	skip_before_filter :verify_login ,only: [:new,:create]
 	def index 
 		@mfr=Mfr.find(session[:mid])
+		unless params[:status].nil?
+		sql="select c.id,c.pid,c.pname,c.quantity,cu.id,cu.username,cu.address,cu.mobile_no,c.status from cproducts as c,custs as
+		 cu,mproducts as mp where mp.mfr_id=#{session[:mid]} and mp.pid=c.pid and c.cust_id=cu.id and c.status='#{params[:status]}' order by c.id ASC;"
+		else
+		sql="select c.id,c.pid,c.pname,c.quantity,cu.id,cu.username,cu.address,cu.mobile_no,c.status from cproducts as c,custs as
+		 cu,mproducts as mp where mp.mfr_id=#{session[:mid]} and mp.pid=c.pid and c.cust_id=cu.id and c.status!='Cart' order by c.id ASC;"
+		end
+		@out=ActiveRecord::Base.connection.execute(sql)
+			
 	end
 	def new
 		@mfr=Mfr.new
-		# p "111111111111111111111111111111111111"
-
 	end
 	def create
 		@mfr=Mfr.new(mfr_params)
-		# p "111111111111111111111111111111111111"
 		if @mfr.save
 			session[:mid]=Mfr.find_by(email: @mfr.email,password: @mfr.password).id
 			p session[:mid]
@@ -49,16 +55,3 @@ class MfrsController < ApplicationController
 		params.require(:mfr).permit(:username,:email,:password,:mobile_no)
 	end
 end
-
-
-
-
-
-# <!-- <%= @mfr.mproduct.each do |s|
-
-# 	s
-	
-	
-	
-# 	end %>
-# 	-->

@@ -18,6 +18,10 @@ Rails.application.routes.draw do
   get 'orders/confirm'=>'orders#confirm'
   get 'orders/cancel'=>'orders#cancel'
   get 'orders/show'=>'orders#show'
+  get 'orders/shipped'=>'orders#shipped'
+  get 'orders/delivered'=>'orders#delivered'
+  get 'orders/packed'=>'orders#packed'
+  get 'orders/forcecancel'=>'orders#forcecancel'
   # get 'mhomes/logout'=>'mhomes#logout', as: 'mlogout'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :mfrs do

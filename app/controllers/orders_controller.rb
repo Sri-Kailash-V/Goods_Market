@@ -22,4 +22,28 @@ class OrdersController < ApplicationController
       @products=Cproduct.where(cust_id: session[:cid])
     end
   end
+  def packed
+    @products=Cproduct.find(params[:id])
+    @products.status="Packed"
+    @products.save
+    redirect_to :back,notice: "status updated"
+  end
+  def shipped
+    @products=Cproduct.find(params[:id])
+    @products.status="Shipped"
+    @products.save
+    redirect_to :back,notice: "status updated"
+  end
+  def delivered
+    @products=Cproduct.find(params[:id])
+    @products.status="Delivered"
+    @products.save
+    redirect_to :back,notice: "Order Forcefully cancelled"
+  end
+  def forcecancel
+    @products=Cproduct.find(params[:id])
+    @products.status="Force Cancelled"
+    @products.save
+    redirect_to :back,notice: "Order Forcefully cancelled"
+  end
 end
