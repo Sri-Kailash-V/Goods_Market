@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
     @products=Cproduct.find(params[:id])
     @products.status="Delivered"
     @products.save
-    redirect_to :back,notice: "Order Forcefully cancelled"
+    redirect_to :back,notice: "status updated"
   end
   def forcecancel
     @products=Cproduct.find(params[:id])
