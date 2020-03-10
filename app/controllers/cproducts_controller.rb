@@ -70,7 +70,7 @@ class CproductsController < ApplicationController
      def payment
         @cproduct = Cproduct.where(cust_id: session[:cid])
         @count=0
-        @cproduct.each do |a| 
+        @cproduct.each do
             @count+=1
         end
         @tot_price=params[:tot_price]

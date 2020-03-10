@@ -15,10 +15,12 @@ class MproductsController < ApplicationController
         end
     end
     def edit
-        @mproduct = Mproduct.find(params[:id])
+        current_user = Mfr.find(@mid)
+        @mproduct = current_user.mproducts.find(params[:id])
     end
     def update
-        @mproduct = Mproduct.find(params[:id])
+        current_user = Mfr.find(@mid)
+        @mproduct = current_user.mproducts.find(params[:id])
         if @mproduct.update(product_params)
           redirect_to mfr_mproducts_path(@mid),notice: "Successfully Updated"
         else
@@ -27,7 +29,8 @@ class MproductsController < ApplicationController
         end
     end
     def destroy
-        @mproduct=Mproduct.find(params[:id])
+        current_user = Mfr.find(@mid)
+        @mproduct = current_user.mproducts.find(params[:id])
         @mproduct.destroy
         redirect_to mfr_mproducts_path(@mid),notice: "Successfully Removed"
     end
@@ -36,3 +39,5 @@ class MproductsController < ApplicationController
         params.require(:mproduct).permit(:product_name,:quantity,:price,:group)
     end 
 end
+
+# @mproduct=Mproduct.find(params[:id])

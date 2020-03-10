@@ -3,14 +3,12 @@ class MfrsController < ApplicationController
 	def index 
 		@mfr=Mfr.find(session[:mid])
 		unless params[:status].nil?
-		sql="select c.id,c.pid,c.pname,c.quantity,cu.id,cu.username,cu.address,cu.mobile_no,c.status from cproducts as c,custs as
-		 cu,mproducts as mp where mp.mfr_id=#{session[:mid]} and mp.pid=c.pid and c.cust_id=cu.id and c.status='#{params[:status]}' order by c.id ASC;"
+			sql=ActiveRecord::Base.connection.raw_connection.prepare("select c.id,c.pid,c.pname,c.quantity,cu.id,cu.username,cu.address,cu.mobile_no,c.status from cproducts as c,custs as cu,mproducts as mp where mp.mfr_id = ? and mp.pid=c.pid and c.cust_id=cu.id and c.status = ? order by c.id ASC;")
+			@out=sql.execute(session[:mid],params[:status])
 		else
-		sql="select c.id,c.pid,c.pname,c.quantity,cu.id,cu.username,cu.address,cu.mobile_no,c.status from cproducts as c,custs as
-		 cu,mproducts as mp where mp.mfr_id=#{session[:mid]} and mp.pid=c.pid and c.cust_id=cu.id and c.status!='Cart' order by c.id ASC;"
+			sql=ActiveRecord::Base.connection.raw_connection.prepare("select c.id,c.pid,c.pname,c.quantity,cu.id,cu.username,cu.address,cu.mobile_no,c.status from cproducts as c,custs as cu,mproducts as mp where mp.mfr_id = ? and mp.pid=c.pid and c.cust_id=cu.id and c.status!='Cart' order by c.id ASC;")
+			@out=sql.execute(session[:mid])
 		end
-		@out=ActiveRecord::Base.connection.execute(sql)
-			
 	end
 	def new
 		@mfr=Mfr.new
@@ -55,3 +53,13 @@ class MfrsController < ApplicationController
 		params.require(:mfr).permit(:username,:email,:password,:mobile_no)
 	end
 end
+
+# @mfr=Mfr.find(session[:mid])
+# 		unless params[:status].nil?
+# 		sql="select c.id,c.pid,c.pname,c.quantity,cu.id,cu.username,cu.address,cu.mobile_no,c.status from cproducts as c,custs as
+# 		 cu,mproducts as mp where mp.mfr_id=#{session[:mid]} and mp.pid=c.pid and c.cust_id=cu.id and c.status='#{params[:status]}' order by c.id ASC;"
+# 		else
+# 		sql="select c.id,c.pid,c.pname,c.quantity,cu.id,cu.username,cu.address,cu.mobile_no,c.status from cproducts as c,custs as
+# 		 cu,mproducts as mp where mp.mfr_id=#{session[:mid]} and mp.pid=c.pid and c.cust_id=cu.id and c.status!='Cart' order by c.id ASC;"
+# 		end
+# 		@out=ActiveRecord::Base.connection.execute(sql)
